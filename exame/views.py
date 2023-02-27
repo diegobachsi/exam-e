@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 from exame.models import Questao, Exame
-#import openai
+import openai
 import string
 import random
 
@@ -12,7 +12,7 @@ def index(request):
 
     return render(request, 'index.html')
 
-#def exame(request):
+def exame(request):
 
     context = {}
 
@@ -30,7 +30,7 @@ def index(request):
 
     return render(request, 'exame.html', context)
 
-#def exame_via_link(request, cod_exame):
+def exame_via_link(request, cod_exame):
 
     context = {}
 
@@ -43,7 +43,7 @@ def index(request):
 
     return render(request, 'exame.html', context)
 
-#def gerar_exame(request):
+def gerar_exame(request):
 
     context = {}
 
@@ -66,7 +66,7 @@ def index(request):
 
     return render(request, 'gerar_exame.html', context)
 
-#def acessar_exame(request):
+def acessar_exame(request):
 
     context = { 
         'template': 'acessar_exame'
@@ -74,13 +74,13 @@ def index(request):
 
     return render(request, 'acessar_exame.html', context)
 
-#def qtd_questoes(cod_exame):
+def qtd_questoes(cod_exame):
 
     exame = Exame.objects.filter(cod_exame=cod_exame).values('qtd_questoes')
 
     return exame
 
-#def dados_questoes(cod_exame):
+def dados_questoes(cod_exame):
 
     questoes = Questao.objects.filter(cod_exame=cod_exame).values('pergunta',
                                                                     'alternativa1',
@@ -91,7 +91,7 @@ def index(request):
 
     return questoes
 
-#def gerador_chatGPT(cod_exame, qtd_questoes, tema):
+def gerador_chatGPT(cod_exame, qtd_questoes, tema):
 
     openai.api_key = "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"
 

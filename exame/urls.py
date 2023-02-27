@@ -6,8 +6,8 @@ app_name = 'exame'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    #path('gerar_exame/', views.gerar_exame, name='gerar_exame'),
-    #path('acessar_exame/', views.acessar_exame, name='acessar_exame'),
-    #path('exame/', views.exame, name='exame'),
-    #path('exame/<cod_exame>', views.exame_via_link, name='exame_via_link')
+    path('gerar_exame/', views.gerar_exame, name='gerar_exame'),
+    path('acessar_exame/', views.acessar_exame, name='acessar_exame'),
+    path('exame/', views.exame, name='exame'),
+    path('exame/<cod_exame>', views.exame_via_link, name='exame_via_link')
 ]

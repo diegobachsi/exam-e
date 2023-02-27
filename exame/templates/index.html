@@ -7,5 +7,13 @@
 {% block content %}
 
 
+<div class="d-flex justify-content-center m-5">
+    <div class="align-self-center ">
+        <a href="{% url 'exame:gerar_exame' %}" type="button" class="btn btn-lg btn-outline-secondary d-block mb-3">
+            Gerar Exame
+        </a>
+        <a href="{% url 'exame:acessar_exame' %}" type="button" class="btn btn-lg btn-outline-secondary">Acessar Exame</a>
+    </div>
+</div>
 
 {% endblock %}
