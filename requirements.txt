@@ -6,5 +6,3 @@ python-decouple==3.6
 pytz==2022.5
 sqlparse==0.4.3
 whitenoise
-fontawesomefree==6.3.0
-openai
