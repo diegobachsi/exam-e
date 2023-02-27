@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    body{
+        margin: 10px;
+    }
+
+    .form-group{
+        padding: 50px;
+    }
+
+    .form-control{
+        display: block !important;
+        margin: 20px 0px;
+        width: 300px;
+    }
+
+</style>
+
+    <form method="POST" action="{% url 'exame:exame' %}">
+        {% csrf_token %}
+        <div class="d-flex justify-content-center m-5">
+            <div class="align-self-center ">
+                <input type="text" class="form-control" name="cod_exame" placeholder="Código Exame" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                <button class="btn btn-outline-secondary" type="submit" id="button-addon1">Acessar Exame</button>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
