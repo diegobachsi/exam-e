@@ -2,6 +2,9 @@
     "version": 2,
     "builds": [
         {
+            "timeout": 180
+        },
+        {
             "src": "prova_digital/wsgi.py",
             "use": "@vercel/python",
             "config": {
