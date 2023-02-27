@@ -26,6 +26,12 @@
             "src": "/(.*)",
             "dest": "prova_digital/wsgi.py"
         }
-    ]
+    ],
+    "functions": {
+        "static/js/script.js": {
+          "memory": 3008,
+          "maxDuration": 30
+        }
+    }
 
 }
