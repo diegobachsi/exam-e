@@ -8,10 +8,6 @@
 
 <style>
 
-    .alert{
-        margin: 50px;
-    }
-
     .form-group{
         padding: 50px;
     }
@@ -34,40 +30,23 @@
 
 </style>
 
-{% if erro %}
 
-    <div class="alert alert-danger">
-        {{ erro }}
-    </div>
-
-
-{% endif %}
-
-{% if response %}
-
-    <div class="alert alert-success">
-        {{ response }}</br>
-        Clique no código para acessar o Exame <a href="{% url 'exame:exame_via_link' cod_exame %}">{{ cod_exame }}</a> ou guarde-o para acessar depois.
-    </div>
-
-{% endif %}
 
 <form method="POST" action="{% url 'exame:gerar_exame' %}">
     {% csrf_token %}
     <div class="d-flex justify-content-center m-5">
         <div class="align-self-center ">
 
-            <!--Input Tema-->
             <input type="text" class="form-control" name="tema" placeholder="Tema Exame" aria-label="Example text with button addon" aria-describedby="button-addon1">
-        
-            <!--Input Qtd_Questões-->
+
             <input type="text" class="form-control" name="qtd_questoes" placeholder="Qtd. Questões" aria-label="Example text with button addon" aria-describedby="button-addon1">
-        
-            <!--Button-->
+
             <button onclick="habilitarLoad()" class="btn btn-outline-secondary" type="submit" id="button-addon1">Gerar Exame</button>
         </div>
     </div>
 </form>
+
+
 
 <div class="load"> 
     <i class="fa fa-cog fa-spin fa-5x fa-fw"></i>
@@ -84,5 +63,6 @@
         const load = document.querySelector(".load");
         load.style.visibility = "visible";
    }
+
  </script>
 {% endblock %}

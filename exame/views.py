@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from exame.models import Questao, Exame
 import openai
@@ -55,16 +55,44 @@ def gerar_exame(request):
         exame = Exame(cod_exame=random_generator(), qtd_questoes=int(qtd_questoes))
         exame.save()
 
-        obj_exame = Exame.objects.get(cod_exame=exame)
+        qtd_questoes_cadastrada = retorna_qtd_questoes_por_cod_exame(exame)
 
-        try:
-            context['response'] = gerador_chatGPT(obj_exame, int(qtd_questoes), tema)
-            context['cod_exame'] = exame
-        except:
-            context['erro'] = 'Servidor do ChatGPT está indisponível no momento.\nGere o teste de forma manual.'
+        context = {
+            'qtd_questoes_cadastrada': qtd_questoes_cadastrada,
+            'qtd_questoes_exame': exame.qtd_questoes,
+            'exame': exame,
+            'tema': tema
+        }
 
+        return redirect('exame:gerando_exame', exame=exame, tema=tema)
+    
+    else:
 
-    return render(request, 'gerar_exame.html', context)
+        return render(request, 'gerar_exame.html', context)
+
+def gerando_exame(request, exame, tema):
+
+    context = {}
+
+    obj_exame = Exame.objects.get(cod_exame=exame)
+
+    qtd_questoes_cadastrada = retorna_qtd_questoes_por_cod_exame(exame)
+
+    gerador_chatGPT(exame, tema)
+
+    context = {
+        'qtd_questoes_cadastrada': qtd_questoes_cadastrada,
+        'qtd_questoes_exame': obj_exame.qtd_questoes,
+        'exame': exame,
+        'tema': tema
+    }
+
+    return render(request, 'gerando_exame.html', context)
+
+def retorna_qtd_questoes_por_cod_exame(exame):
+
+    qtd_questoes_cadastradas = Questao.objects.filter(cod_exame=exame).count()
+    return qtd_questoes_cadastradas
 
 def acessar_exame(request):
 
@@ -91,26 +119,28 @@ def dados_questoes(cod_exame):
 
     return questoes
 
-def gerador_chatGPT(cod_exame, qtd_questoes, tema):
+def gerador_chatGPT(cod_exame, tema):
+
+    cod_exame = Exame.objects.get(cod_exame=cod_exame)
 
     openai.api_key = "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"
 
-    loop = 1
-    while loop <= qtd_questoes:
-        prompt = f"Gere uma questão sobre {tema} com 4 alternativas e a resposta."
-        completions = openai.Completion.create(
-            engine="text-davinci-003",
-            prompt=prompt,
-            max_tokens=500
-        )
+    prompt = f"Gere uma questão sobre {tema} com 4 alternativas e a resposta."
+    completions = openai.Completion.create(
+        engine="text-davinci-003",
+        prompt=prompt,
+        max_tokens=500
+    )
 
-        message = completions.choices[0].text
-        message = message.split('\n')
+    message = completions.choices[0].text
+    message = message.split('\n')
 
-        itens = []
-        for elem in message:
-            if len(elem) > 2:
-                itens.append(elem)
+    itens = []
+    for elem in message:
+        if len(elem) > 2:
+            itens.append(elem)
+
+    if len(itens) == 6:
 
         pergunta = itens[0]
         alternativa1 = itens[1]
@@ -126,9 +156,6 @@ def gerador_chatGPT(cod_exame, qtd_questoes, tema):
             try:
                 gravar_questao = Questao(cod_exame=cod_exame, pergunta=pergunta, alternativa1=alternativa1[3:], alternativa2=alternativa2[3:], alternativa3=alternativa3[3:], alternativa4=alternativa4[3:], resposta=resposta[13:], area=tema)
                 gravar_questao.save()
-                loop+=1
             except:
                 pass
-
-    return 'Sucesso na geração de todas as questões pelo chatGPT.'
 

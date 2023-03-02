@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Index{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .msg{
+        text-align: center;
+    }
+
+</style>
+
+<div class="msg">
+
+    Criando {{ qtd_questoes_cadastrada }} de {{ qtd_questoes_exame }} do tema {{ tema }}.
+
+</div>
+
+
+{% if qtd_questoes_cadastrada < qtd_questoes_exame %}
+
+    <script>
+
+        window.location.href = "{% url 'exame:gerando_exame' exame tema %}";
+
+    </script>
+
+{% else %}
+
+<div class="msg">
+
+    Todas as questões foram criadas
+
+</div>
+    
+
+{% endif %}
+
+
+
+{% endblock %}
