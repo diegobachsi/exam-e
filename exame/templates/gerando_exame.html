@@ -8,15 +8,38 @@
 
 <style>
 
-    .msg{
+    .msg_carregando, .msg_concluido{
         text-align: center;
+    }
+
+    .load {
+        text-align: center;
+        color: blue;
+    }
+
+    .code{
+        text-decoration: none;
+        font-size: 2rem;
+    }
+
+    .code:hover{
+        color: rgb(129, 180, 238);
+    }
+
+    #icon_check{
+        color: rgb(50, 133, 50);
     }
 
 </style>
 
-<div class="msg">
+<div class="msg_carregando">
 
-    Criando {{ qtd_questoes_cadastrada }} de {{ qtd_questoes_exame }} do tema {{ tema }}.
+    Criando {{ qtd_questoes_cadastrada }} de {{ qtd_questoes_exame }} questões
+
+    <div class="load">
+        <i class="fas fa-cog fa-spin fa-5x fa-fw"></i>
+        <p>ChatGPT trabalhando...</p>
+    </div>
 
 </div>
 
@@ -31,9 +54,18 @@
 
 {% else %}
 
-<div class="msg">
+<div class="msg_concluido">
 
-    Todas as questões foram criadas
+    <script>
+        const load = document.querySelector(".msg_carregando");
+        load.style.display = "none";
+    </script>
+
+    <i id="icon_check" class="fas fa-check fa-5x p-3"></i>
+    <h1>Todas as questões foram criadas!</h1>
+    <h4>Clique no código para acessar o Exame</h4>
+    <p><a class="code" href="{% url 'exame:exame_via_link' exame %}">{{ exame }}</a></p>
+    <p>ou guarde-o para acessar depois.</p>
 
 </div>
     
