@@ -85,9 +85,9 @@ def gerando_exame(request, exame, tema):
 
     obj_exame = Exame.objects.get(cod_exame=exame)
 
-    qtd_questoes_cadastrada = retorna_qtd_questoes_por_cod_exame(exame)
-
     gerador_chatGPT(exame, tema)
+    
+    qtd_questoes_cadastrada = retorna_qtd_questoes_por_cod_exame(exame)
 
     context = {
         'qtd_questoes_cadastrada': qtd_questoes_cadastrada,
