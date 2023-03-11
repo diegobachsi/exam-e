@@ -24,9 +24,23 @@
         visibility: hidden;
     }
 
+    .erro{
+        text-align: center;
+    }
+
+    .alert{
+        border-radius: 0px;
+    }
+
 </style>
 
-
+<div class="erro">
+    {% if erro %}
+        <div class="alert alert-danger">
+            Favor informe um valor inteiro maior que zero.
+        </div>
+    {% endif %}
+</div>
 
 <form method="POST" action="{% url 'exame:gerar_exame' %}">
     {% csrf_token %}

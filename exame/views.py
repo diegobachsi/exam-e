@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
 from exame.models import Questao, Exame
+import os
 import openai
 import string
 import random
@@ -52,22 +53,30 @@ def gerar_exame(request):
         tema = request.POST["tema"]
         qtd_questoes = request.POST["qtd_questoes"]
 
-        exame = Exame(cod_exame=random_generator(), qtd_questoes=int(qtd_questoes))
-        exame.save()
+        try:
+            qtd_questoes = int(qtd_questoes)
 
-        qtd_questoes_cadastrada = retorna_qtd_questoes_por_cod_exame(exame)
+            if qtd_questoes > 0:
+                exame = Exame(cod_exame=random_generator(), qtd_questoes=qtd_questoes)
+                exame.save()
 
-        context = {
-            'qtd_questoes_cadastrada': qtd_questoes_cadastrada,
-            'qtd_questoes_exame': exame.qtd_questoes,
-            'exame': exame,
-            'tema': tema
-        }
+                qtd_questoes_cadastrada = retorna_qtd_questoes_por_cod_exame(exame)
 
-        return redirect('exame:gerando_exame', exame=exame, tema=tema)
-    
+                context = {
+                    'qtd_questoes_cadastrada': qtd_questoes_cadastrada,
+                    'qtd_questoes_exame': exame.qtd_questoes,
+                    'exame': exame,
+                    'tema': tema
+                }
+
+                return redirect('exame:gerando_exame', exame=exame, tema=tema)
+            else:
+                context['erro'] = True
+                return render(request, 'gerar_exame.html', context)
+        except:
+            context['erro'] = True
+            return render(request, 'gerar_exame.html', context)
     else:
-
         return render(request, 'gerar_exame.html', context)
 
 def gerando_exame(request, exame, tema):
@@ -122,8 +131,8 @@ def dados_questoes(cod_exame):
 def gerador_chatGPT(cod_exame, tema):
 
     cod_exame = Exame.objects.get(cod_exame=cod_exame)
-
-    openai.api_key = "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"
+    
+    openai.api_key = os.environ["OPENAI_API_KEY"]
 
     prompt = f"Gere uma questão sobre {tema} com 4 alternativas e a resposta."
     completions = openai.Completion.create(

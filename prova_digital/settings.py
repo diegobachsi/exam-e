@@ -11,10 +11,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&deqajrt+-j36$8z5nfof8^)y^j_0-nvn*wg4z&)x9p24c0+9g'
+
+SECRET_KEY = os.environ["SECRET_KEY"]
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -68,8 +70,7 @@ WSGI_APPLICATION = 'prova_digital.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-DATABASE_URL = 'postgresql://postgres:VEL2E1s4WNu0qDqL@db.ogwqnlsqyhxbdxtewwle.supabase.co:5432/postgres'
-
+DATABASE_URL = os.environ["DATABASE_URL"]
 DATABASES = {
     'default': dj_database_url.config(default=DATABASE_URL)
 }
@@ -121,4 +122,3 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATIC_URL = '/static/'
 STATICFILES_DIRS = os.path.join(BASE_DIR, 'static'),
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
-

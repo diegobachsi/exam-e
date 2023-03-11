@@ -1,7 +1,7 @@
 {% load static %}
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,27 +19,20 @@
     <style>
 
         .nav{
-            display: grid;
-            grid-template-columns: 30% 40% 30%;
-            margin-top: 30px;
+            padding: 10px;
         }
 
         .logo{
-            text-align: center  ;
+            text-align: center;
         }
 
         .logo > img{
             width: 200px;
         }
 
-        .home{
-            margin-right: 30px;
-            text-align: right;
-        }
-
         .home > a{
             font-size: 30px;
-            color: gray;
+            color: rgb(173, 173, 173);
         }
         
         .home > a:hover{
@@ -47,19 +40,24 @@
         }
     </style>
 
+    <!-- Icones Nav -->
     <div class="nav">
-        <div>
-           
-        </div>
-        <div class="logo">
-            <img src="{% static 'images/logo.png' %}">
-        </div>
         <div class="home">
-            <a href="/"><i class="fas fa-home"></i></a>
-        </div>
+            <a href="/">
+                <i class="fas fa-home"></i>
+            </a>  
+        </div>  
     </div>
 
-    {% block content %}{% endblock %}
+    <!-- Logo -->
+    <div class="logo">
+        <img src="{% static 'images/logo.png' %}">
+    </div>
+   
+    <!-- Container -->
+    <div class="container p-3">
+        {% block content %}{% endblock %}
+    </div>
 
 </body>
 </html>
