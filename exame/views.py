@@ -132,7 +132,7 @@ def gerador_chatGPT(cod_exame, tema):
 
     cod_exame = Exame.objects.get(cod_exame=cod_exame)
     
-    openai.api_key = os.environ["OPENAI_API_KEY"]
+    openai.api_key = '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'
 
     prompt = f"Gere uma questão sobre {tema} com 4 alternativas e a resposta."
     completions = openai.Completion.create(
@@ -167,4 +167,13 @@ def gerador_chatGPT(cod_exame, tema):
                 gravar_questao.save()
             except:
                 pass
+
+def tesouro_secreto(request):
+
+    return render(request, 'tesouro_secreto.html')
+
+def mapa(request):
+    
+    return render(request, 'mapa.html')
+
 

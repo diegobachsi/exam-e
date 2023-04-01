@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Tesouro{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .nav, .logo{
+        display: none;
+        padding: 0;
+    }
+
+    #video{
+        width: 100%;
+        height: 400px;
+    }
+
+    .mapa{
+        padding-top: 200px;
+    }
+
+</style>
+
+<div class="d-flex justify-content-center m-5">
+    <div class="align-self-center ">
+        
+        <h1 style="text-align: center;">M A P A</h1>
+        <img width="100%" src="{% static 'images/mapa.jpg' %}">
+        
+    </div>
+</div>
+
+{% endblock %}
